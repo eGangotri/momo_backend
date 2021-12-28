@@ -1,7 +1,7 @@
 const puppeteer = require('puppeteer');
 const POSTGRES = require("../db/postgres");
 
-export const recieveCtrl = async (req: any, res: any, next: any) => {
+export const scrapeCtrl = async (req: any, res: any, next: any) => {
   const data = req.body.data;
   try {
     console.log(`recieve ${JSON.stringify(data)}. scrape now`);
@@ -22,7 +22,7 @@ export const recieveCtrl = async (req: any, res: any, next: any) => {
   }
 };
 
-export const getDataCtrl = async(req: any, res: any, next: any) => {
+export const retrieveCtrl = async(req: any, res: any, next: any) => {
   try {
     POSTGRES.retrieveFromDB().then((dbResponse:any)=>{
       res.json(dbResponse)

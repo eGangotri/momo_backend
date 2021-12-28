@@ -10,7 +10,7 @@ const port = process.env.PORT || 4000;
 
 momosApp.use(express.json());
 momosApp.use(loggerMW);
-//momosApp.use(authMW);
+momosApp.use(authMW);
 
 momosApp.use('/momos', router);
 momosApp.use(errorMW)

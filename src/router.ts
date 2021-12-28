@@ -8,8 +8,8 @@ router.get('/', (req:any, res:any) => {
     console.log('Hello world!!');
   })
   
-router.post('/recieve', momosCtrl.recieveCtrl);
+router.post('/scrape', momosCtrl.scrapeCtrl);
 
-router.get('/getData', momosCtrl.getDataCtrl);
+router.get('/retrieve', momosCtrl.retrieveCtrl);
 
 module.exports = router;
