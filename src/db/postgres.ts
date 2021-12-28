@@ -30,7 +30,6 @@ export const retrieveFromDB = async () => {
 
   const { rows } = await pool.query(SELECT_QUERY);
   console.log(`retrieveFromDB = ${JSON.stringify(rows)}`);
-
   pool.end();
   return rows;
 };
