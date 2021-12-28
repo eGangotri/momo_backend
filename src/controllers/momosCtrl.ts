@@ -1,5 +1,5 @@
 const puppeteer = require('puppeteer');
-const saveToDB = require("../db/postgres").saveToDB;
+const POSTGRES = require("../db/postgres");
 
 export const recieveCtrl = async (req: any, res: any, next: any) => {
   const data = req.body.data;
@@ -15,12 +15,22 @@ export const recieveCtrl = async (req: any, res: any, next: any) => {
         imgSrcs
       })
     }
-    saveToDB(imgJSON)
+    POSTGRES.saveToDB(imgJSON);
     res.json(imgJSON)
   } catch (err) {
     next(err);
   }
 };
+
+export const getDataCtrl = async(req: any, res: any, next: any) => {
+  try {
+    POSTGRES.retrieveFromDB().then((dbResponse:any)=>{
+      res.json(dbResponse)
+    });
+  } catch (err) {
+    next(err);
+  }
+}
 
 async function scrape(url: any){
     const browser = await puppeteer.launch();

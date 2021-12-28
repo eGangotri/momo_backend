@@ -3,7 +3,7 @@ import { loggerMW } from './middleware/loggerMW';
 import { authMW } from './middleware/authMW';
 
 let express = require('express');
-let router = require('./routes');
+let router = require('./router');
 
 const momosApp = express();
 const port = process.env.PORT || 4000;

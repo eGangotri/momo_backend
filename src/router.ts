@@ -1,5 +1,5 @@
 let express = require( "express")
-let recieveCtrl = require("./controllers/recieveCtrl")
+let momosCtrl = require("./controllers/momosCtrl")
 export const router = express.Router();
 
 
@@ -8,6 +8,8 @@ router.get('/', (req:any, res:any) => {
     console.log('Hello world!!');
   })
   
-router.post('/recieve', recieveCtrl.recieveCtrl)
+router.post('/recieve', momosCtrl.recieveCtrl);
+
+router.get('/getData', momosCtrl.getDataCtrl);
 
 module.exports = router;
