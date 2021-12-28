@@ -9,7 +9,13 @@ export const scrapeCtrl = async (req: any, res: any, next: any) => {
     const imgJSON = []
     for(let _url of data){
       console.log(`_url ${_url}`);
-      const imgSrcs = await scrape(_url)
+      let imgSrcs:String = await scrape(_url)
+      if(imgSrcs.length > 1000){
+        imgSrcs = imgSrcs.substring(0,999);
+        imgSrcs = imgSrcs.substring(0, imgSrcs.lastIndexOf(","))
+      }
+      console.log(`imgSrcs ${imgSrcs}`);
+
       imgJSON.push({
         url:_url,
         imgSrcs
@@ -35,14 +41,16 @@ export const retrieveCtrl = async(req: any, res: any, next: any) => {
 async function scrape(url: any){
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
+    await page.setDefaultNavigationTimeout(0); 
+
     await page.goto(url);
     await page.waitForTimeout(1000);
 
     const imgSrcs = await page.$$eval("img", (imgs:any)=>{
       return imgs.map((x:any)=>x.src)
-    });
+    })
 
     console.log(`imgSrcs ${imgSrcs}`)
     await browser.close();
-    return imgSrcs
+    return imgSrcs.join(",");
   }

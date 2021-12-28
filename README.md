@@ -1,6 +1,6 @@
 Media Scraper
 - Create an API which will accept an array for Web URL in the request Body.X
-- Add Basic Server Auth Middleware.
+- Add Basic Server Auth Middleware.X
 - Add Middleware for Logging and Error Handling.X
 - Scrap Image and Video URLs for requested Web URL's.
 - Store All Data into any SQL database.(elephantsql/indicjournals2)X

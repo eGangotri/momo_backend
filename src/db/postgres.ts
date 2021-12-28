@@ -1,9 +1,16 @@
 const { Pool, Client } = require('pg');
+
+//https://api.elephantsql.com/console/2b190722-3bf6-4e73-856a-6025b39c0263/browser?#
+
 const connectionString =
   'postgres://ajovycks:eoDyXY-hiLB-fW0m0NLtfZy-HPuOuqWo@kashin.db.elephantsql.com/ajovycks';
 const pool = new Pool({
   connectionString
 });
+
+export const closePool = ()=>{
+    pool.end();
+}
 
 export const saveToDB = (data: Array<any>) => {
   const _values = data
@@ -20,7 +27,6 @@ export const saveToDB = (data: Array<any>) => {
     if (err) {
       console.log(err);
     }
-    pool.end();
   });
 };
 
@@ -30,7 +36,6 @@ export const retrieveFromDB = async () => {
 
   const { rows } = await pool.query(SELECT_QUERY);
   console.log(`retrieveFromDB = ${JSON.stringify(rows)}`);
-  pool.end();
   return rows;
 };
 
@@ -41,6 +46,5 @@ export const selectNow = (data: any) => {
     } else {
       console.log(res.rows);
     }
-    pool.end();
   });
 };
