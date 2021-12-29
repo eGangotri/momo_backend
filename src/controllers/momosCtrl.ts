@@ -6,23 +6,36 @@ export const scrapeCtrl = async (req: any, res: any, next: any) => {
   try {
     console.log(`recieve ${JSON.stringify(data)}. scrape now`);
     
-    const imgJSON = []
+    let collectedData:Array<any> = []
     for(let _url of data){
       console.log(`_url ${_url}`);
-      let imgSrcs:String = await scrape(_url)
-      if(imgSrcs.length > 1000){
-        imgSrcs = imgSrcs.substring(0,999);
-        imgSrcs = imgSrcs.substring(0, imgSrcs.lastIndexOf(","))
-      }
+      let scrapedData:any = await scrape(_url)
+      let imgSrcs = scrapedData.imgSrcs;
+      let videoSrcs = scrapedData.videoSrcs;
+
       console.log(`imgSrcs ${imgSrcs}`);
 
-      imgJSON.push({
-        url:_url,
-        imgSrcs
+      imgSrcs.forEach((imgSrc:any) =>{
+        collectedData.push({
+          scraped_site:_url,
+          url:imgSrc,
+          type:'I'
+        })
       })
+
+      videoSrcs.forEach((videoSrc:any) =>{
+        collectedData.push({
+          scraped_site:_url,
+          url:videoSrc,
+          type:'V'
+        })
+      })
+
     }
-    POSTGRES.saveToDB(imgJSON);
-    res.json(imgJSON)
+
+   POSTGRES.saveToDB(collectedData);
+
+    res.json(collectedData);
   } catch (err) {
     next(err);
   }
@@ -50,7 +63,16 @@ async function scrape(url: any){
       return imgs.map((x:any)=>x.src)
     })
 
+    const videoSrcs = await page.$$eval("video > source", (videos:any)=>{
+      return videos.map((x:any)=>x.src)
+    })
+
     console.log(`imgSrcs ${imgSrcs}`)
+    console.log(`videoSrcs ${videoSrcs}`)
+    
     await browser.close();
-    return imgSrcs.join(",");
+    return {
+      imgSrcs: imgSrcs,
+      videoSrcs: videoSrcs,
+    }
   }
