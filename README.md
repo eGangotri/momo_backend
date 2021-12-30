@@ -15,9 +15,14 @@ https://github.com/eGangotri/momo_react_frontend
 #### Retrieve
 <img src='https://github.com/eGangotri/momo_backend/blob/master/src/retrieve.png?raw=true)' />
 
+API Call:
+http://admin:supersecret@localhost:4000/momos/retrieve
 
 #### Scrape
 <img src='https://github.com/eGangotri/momo_backend/blob/master/src/scrape.PNG?raw=true)' />
+
+API Call:
+http://admin:supersecret@localhost:4000/momos/scrape
 
 #### Media Scraper
 - Create an API which will accept an array for Web URL in the request Body.
