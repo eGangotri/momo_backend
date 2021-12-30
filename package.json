@@ -5,9 +5,11 @@
   "main": "./src/index.ts",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "rimraf ./build && tsc -p tsconfig.json",
-    "start": "node --loader ts-node/esm ./src/index.ts",
-    "prod_start": "npm run build && node build/index.js",
+    "clean": "rimraf ./build ",
+    "build": "tsc -p tsconfig.json",
+    "dev_start": "node --loader ts-node/esm ./src/index.ts",
+    "start": "npm run clean && npm run build && node build/index.js",
+
     "lint": "eslint . --ext .ts",
     "lint-and-fix": "eslint . --ext .ts --fix",
     "prettier-format": "prettier --config .prettierrc \"src/**/*.ts\" --write"
